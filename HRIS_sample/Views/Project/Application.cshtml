@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "Application";
+}
+
+<h2>Application</h2>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btn btn-default btn-sm" href="../project/dashboard">Back</a>
+            <!-- Trigger the modal with a button -->
+            <a class="btn btn-primary btn-sm" id="AddIditForm" href="../project/applicationdetail">Add</a>
+        </div>
+        <div class="panel-body">
+            <div id="applicationCollectionGrid" class="border-wijmo"></div>
+        </div>
+        <div class="panel-footer">
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteConfirmModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">2
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Delete Application?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete" onclick="btnApplicationDeleteConfirmed()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/software-js")
+<script type="text/javascript">
+    var applicationList;
+    var applicationGrid;
+    var applicationCollectionView;
+    //=================ADD Onclikc ==========================
+    function cmdAddButton_OnClick() {
+        document.getElementById("AddIditForm").innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> Adding";
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/application/add',
+            contentType: 'application/json:charset=utf-8',
+            success: function (id) {
+                if (id > 0) {
+                    window.location = '/Project/ApplicationDetail?id=' + ID;
+                } else {
+                    toastr.error("Internal Server Error");
+                }
+            }
+        });
+    }
+    //======================= Delete =========================
+    //Modal
+    function cmddeleteButton_Onclick() {
+        $('#DeleteConfirmModal').modal({
+            "show": true,
+            "backdrop":"static"
+        });
+    }
+    //Confirm
+    function btnApplicationDeleteConfirmed() {
+        applicationList.editItem(applicationList.currentItem);
+        var id = applicationList.currentEditItem.ID;
+
+        $.ajax({
+            url: '/api/application/delete/' + id,
+            type: 'DELETE',
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            statusCode: {
+                200: function () {
+                    toastr.success("Record Deleted");
+                    $('#DeleteConfirmModal').modal('hide');
+                    location.reload();
+                },
+                404: function () {
+                    toastr.error("Delete Not Found")
+                }, 400: function () {
+                    toastr.error("Bad Request")
+                }
+            }
+        });
+    }
+    //======================= edit ===========================
+    function cmdEditButton_OnClick() {
+        applicationList.editItem(applicationList.currentItem);
+        var applicationCurrentItem = applicationList.currentEditItem;
+        window.location = '/project/applicationdetail?id=' + applicationCurrentItem.ID;
+    }
+    //=========================================================
+    //=============== On Page Load ============================
+    //=========================================================
+    //======================== UI =============================
+    function getTrnApplication() {
+        var applicationList = new wijmo.collections.ObservableArray();
+        $.ajax({
+            url: '/api/application/list',
+            cache: false,
+            type: 'GET',
+            contentType: 'application/json:charset=utf-8',
+            data: {},
+            success: function (result) {
+                if (result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        applicationList.push({
+                            EditId: "<button class='btn btn-primary btn-xs btn-block' id='AppEditButton' onClick='cmdEditButton_OnClick()'><i class='glyphicon glyphicon-pencil'></i> Edit</button>",
+                            DeleteId: "<button class='btn btn-danger btn-xs btn-block' id='AppDeleteButton' onClick='cmddeleteButton_Onclick()'><i class='glyphicon glyphicon-trash'></i> Delete</button>",
+                            ID: result[i]["ID"],
+                            ApplicantID: result[i]["ApplicantID"],
+                            ApplicationTypeID: result[i]["ApplicationTypeID"],
+                            TypeApplication: result[i]["TypeApplication"],
+                            Reason: result[i]["Reason"],
+                            Body: result[i]["Body"],
+                            Remarks: result[i]["Remarks"],
+                            ApplicationDate: result[i]["ApplicationDate"],
+                            IsLocked: result[i]["IsLocked"],
+                            UserDateEntry: result[i]["UserDateEntry"],
+                            UserEntryID: result[i]["UserEntryID"],
+                            UpdatedUserID: result[i]["UpdatedUserID"],
+                            UpdatedDateEntry: result[i]["UpdatedDateEntry"]
+                        });
+                    }
+                }
+            }
+        });
+        return applicationList;
+    }
+
+    function ss() {
+
+        applicationList = new wijmo.collections.CollectionView(getTrnApplication());
+        applicationList.pageSize = 15;
+
+        applicationGrid = new wijmo.grid.FlexGrid('#applicationCollectionGrid');
+        applicationGrid.initialize({
+            columns: [{
+                    "header": "Edit",
+                    "binding": "EditId",
+                    "align": "left",
+                    "width": "1*",
+                    "isContentHtml": true
+                },
+                {
+                    "header": "Delete",
+                    "binding": "DeleteId",
+                    "align": "left",
+                    "width": "1*",
+                    "isContentHtml": true
+                },
+                {
+                    "header": "Application Type",
+                    "binding": "TypeApplication",
+                    "align": "left",
+                    "width": "3*",
+                },
+                {
+                    "header": "Reason",
+                    "binding": "Reason",
+                    "align": "left",
+                    "width": "5*",
+                },
+                {
+                    "header": "Remarks",
+                    "binding": "Remarks",
+                    "align": "left",
+                    "width": "4*",
+                },
+                {
+                    "header": "Is Locked",
+                    "binding": "IsLocked",
+                    "align": "left",
+                    "width": "2*",
+                }],
+            autoGenerateColumns: false,
+            itemsSource: applicationList,
+            isReadOnly: true,
+            autoSizeMode: wijmo.grid.AutoSizeMode.Both,
+            allowDragging: wijmo.grid.AllowDragging.None,
+            selectionMode: wijmo.grid.SelectionMode.Row
+        });
+        applicationGrid.trackChanges = true;
+    };
+
+
+    window.onload = function () {
+        ss();
+        //cboApplicationType();
+    }
+</script>

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.125, 8.5" name="HRIS">
+  <DataContextMoniker Name="/HRISDataContext" />
+  <nestedChildShapes>
+    <classShape Id="756c21af-7453-4859-a936-8d65b5421ca3" absoluteBounds="6.125, 0.5, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/HRISDataContext/AspNetRole" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dc0bee09-d111-4ab6-9c4e-bf72b93f32d8" absoluteBounds="6.14, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="577443f8-d760-4359-a07f-9f76e264e8b3" absoluteBounds="7, 6.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/HRISDataContext/AspNetUserClaim" />
+      <nestedChildShapes>
+        <elementListCompartment Id="03309602-d737-40f3-a0bc-9eb83fea4318" absoluteBounds="7.015, 7.0850000000000009, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5096cbe4-9341-4a34-bff2-8ce116e6dbb2" absoluteBounds="8, 5, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/HRISDataContext/AspNetUserLogin" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0c555b11-b0ce-442a-a3aa-0effa2418323" absoluteBounds="8.015, 5.4600000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="063f9e36-8743-4c37-aefb-300a4634b307" absoluteBounds="8.875, 1.5, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/HRISDataContext/AspNetUserRole" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dd39fbb3-5903-437d-8e99-72537074545a" absoluteBounds="8.89, 1.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.125 : 1.09699625651042); (8.575 : 1.09699625651042); (8.575 : 2.09699625651042); (8.875 : 2.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/AspNetRole/AspNetRole_AspNetUserRole" />
+      <nodes>
+        <classShapeMoniker Id="756c21af-7453-4859-a936-8d65b5421ca3" />
+        <classShapeMoniker Id="063f9e36-8743-4c37-aefb-300a4634b307" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="9b46d2a9-0d53-483c-a9c9-a7075c0ca320" absoluteBounds="0.5, 0.75, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/HRISDataContext/TrnApplicationType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aaf8186a-0448-49e0-bd63-7dd71db96f34" absoluteBounds="0.51500000000000012, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8e021daa-9a69-442c-b859-d42c33b60437" absoluteBounds="6.25, 2.25, 2, 3.1170068359375">
+      <DataClassMoniker Name="/HRISDataContext/AspNetUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6071c8e5-a2af-4dd5-9383-dca45d6c827b" absoluteBounds="6.265, 2.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.46875 : 5.3670068359375); (7.46875 : 6.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserClaim" />
+      <nodes>
+        <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
+        <classShapeMoniker Id="577443f8-d760-4359-a07f-9f76e264e8b3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 3.87824575651042); (8.5312505 : 3.87824575651042); (8.5312505 : 5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserLogin" />
+      <nodes>
+        <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
+        <classShapeMoniker Id="5096cbe4-9341-4a34-bff2-8ce116e6dbb2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 2.47199625651042); (8.875 : 2.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserRole" />
+      <nodes>
+        <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
+        <classShapeMoniker Id="063f9e36-8743-4c37-aefb-300a4634b307" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8a131c4a-2789-4921-b3d6-d85d752b1581" absoluteBounds="3, 5.25, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/HRISDataContext/MstEmployee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a123f3ca-5a28-47bf-bec5-10d93f080a70" absoluteBounds="3.0149999999999997, 5.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.59375 : 5.3670068359375); (6.59375 : 6.50564697265625); (5 : 6.50564697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_MstEmployee" />
+      <nodes>
+        <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
+        <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" absoluteBounds="3.25, 1.125, 2, 3.1170068359375">
+      <DataClassMoniker Name="/HRISDataContext/TrnApplication" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4f79c0d4-98d4-45df-8d9f-8ea549b9d249" absoluteBounds="3.265, 1.585, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.125 : 5.25); (4.125 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication" />
+      <nodes>
+        <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
+        <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.625 : 5.25); (4.625 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication1" />
+      <nodes>
+        <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
+        <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.625 : 5.25); (3.625 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication2" />
+      <nodes>
+        <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
+        <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 1.53449625651042); (3.25 : 1.53449625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/HRISDataContext/TrnApplicationType/TrnApplicationType_TrnApplication" />
+      <nodes>
+        <classShapeMoniker Id="9b46d2a9-0d53-483c-a9c9-a7075c0ca320" />
+        <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
