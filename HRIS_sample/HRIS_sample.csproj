@@ -195,6 +195,7 @@
   <ItemGroup>
     <Compile Include="API_controller\ApplicationController.cs" />
     <Compile Include="API_controller\ApplicationTypeController.cs" />
+    <Compile Include="API_controller\EmployeeController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -211,7 +212,6 @@
       <DependentUpon>HRIS.dbml</DependentUpon>
     </Compile>
     <Compile Include="Entities\Application.cs" />
-    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -299,6 +299,7 @@
     <Content Include="Views\Project\Dashboard.cshtml" />
     <Content Include="Views\Project\Application.cshtml" />
     <Content Include="Views\Project\ApplicationDetail.cshtml" />
+    <Content Include="Views\Project\Employee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

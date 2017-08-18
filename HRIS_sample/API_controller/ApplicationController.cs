@@ -22,13 +22,14 @@ namespace HRIS_sample.API_controller
                                   {
                                       ID = d.ID,
                                       ApplicantID = d.ApplicantID,
+                                      Name = d.MstEmployee.Name,
                                       ApplicationTypeID = d.ApplicationTypeId,
                                       TypeApplication = d.TrnApplicationType.ApplicationType,
                                       Body = d.Body,
-                                      Reason=d.Reason,
+                                      Reason = d.Reason,
                                       Remarks = d.Remarks,
                                       ApplicationDate = d.ApplicationDate,
-                                      IsLocked=d.IsLocked,
+                                      IsLocked = d.IsLocked,
                                       UserDateEntry = d.UserDateEntry,
                                       UserEntryID = d.UserEntryID,
                                       UpdatedUserID = d.UpdatedUserID,
@@ -54,48 +55,49 @@ namespace HRIS_sample.API_controller
                                         ApplicationDate = d.ApplicationDate,
                                         IsLocked = d.IsLocked,
                                         UserDateEntry = d.UserDateEntry,
-                                        UserEntryID=d.UserEntryID,
-                                        UpdatedUserID=d.UpdatedUserID,
-                                        UpdatedDateEntry=d.UpdatedDateEntry
+                                        UserEntryID = d.UserEntryID,
+                                        UpdatedUserID = d.UpdatedUserID,
+                                        UpdatedDateEntry = d.UpdatedDateEntry
                                     };
             return (Entities.Application)applicationToList.FirstOrDefault();
             //return applicationToList.ToList();
         }
         //add
-        [HttpPost, Route("api/application/add")]
-        public HttpResponseMessage postApplication(Entities.Application addApplication)
+        [HttpPost]
+        [Route("api/application/add")]
+        public int postApplication(Entities.Application addApplication)
         {
             try
             {
-                var employee = (from d in db.MstEmployees where d.UserID == User.Identity.GetUserId() select d.ID).SingleOrDefault();
+                //var employee = (from d in db.MstEmployees where d.UserID == User.Identity.GetUserId() select d.ID).SingleOrDefault();
                 Data.TrnApplication newApplication = new Data.TrnApplication();
 
-
-
-                newApplication.ApplicantID = employee;
+                newApplication.ApplicantID = addApplication.ApplicantID;
                 newApplication.ApplicationTypeId = addApplication.ApplicationTypeID;
-                newApplication.Body = "NA";/*!= null  addApplication.Body : "NA";*/
-                newApplication.Reason = "NA";/*!= null ? addApplication.Reason : "NA";*/
-                newApplication.Remarks ="NA";/*!= null ? addApplication.Remarks : "Na";*/
+                newApplication.Body = addApplication.Body;
+                newApplication.Reason = addApplication.Reason;
+                newApplication.Remarks = addApplication.Remarks;
                 newApplication.ApplicationDate = DateTime.Today;
-                newApplication.UserEntryID = employee;
-                newApplication.UpdatedUserID = employee;
+                newApplication.UserEntryID = 2;
+                newApplication.UpdatedUserID = 2;
                 newApplication.UserDateEntry = DateTime.Today;
                 newApplication.UpdatedDateEntry = DateTime.Today;
-                newApplication.IsLocked = addApplication.IsLocked;
+                newApplication.IsLocked = true;
                 db.TrnApplications.InsertOnSubmit(newApplication);
                 db.SubmitChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return newApplication.ID;
+                //return Request.CreateResponse(HttpStatusCode.OK,addApplication.ID);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return 0;
+                //return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
         //delete
-        [HttpDelete,Route("api/application/delete/{id}")]
+        [HttpDelete, Route("api/application/delete/{id}")]
         public HttpResponseMessage Delete(String id)
         {
             try
@@ -103,17 +105,22 @@ namespace HRIS_sample.API_controller
                 var applications = from d in db.TrnApplications where d.ID == Convert.ToInt32(id) select d;
                 if (applications.Any())
                 {
-                    db.TrnApplications.DeleteOnSubmit(applications.First());
-                    db.SubmitChanges();
+                    if (!applications.FirstOrDefault().IsLocked)
+                    {
 
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                        db.TrnApplications.DeleteOnSubmit(applications.First());
+                        db.SubmitChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
                 }
                 else
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -122,39 +129,45 @@ namespace HRIS_sample.API_controller
         // LOCK
         [HttpPut]
         [Route("api/application/Lock/{id}")]
-        public HttpResponseMessage LockApp(String id,Entities.Application lockapplication)
+        public HttpResponseMessage LockApp(String id, Entities.Application lockapplication)
         {
             try
             {
                 var appID = from d in db.TrnApplications where d.ID == Convert.ToInt32(id) select d;
                 if (appID.Any())
                 {
-                    var updateApp = appID.FirstOrDefault();
-                    var employee = (from d in db.MstEmployees where d.UserID == User.Identity.GetUserId() select d.ID).SingleOrDefault();
+                    if (!appID.FirstOrDefault().IsLocked)
+                    {
+                        var updateApp = appID.FirstOrDefault();
 
+                        updateApp.ApplicantID = lockapplication.ApplicantID;
+                        updateApp.ApplicationTypeId = lockapplication.ApplicationTypeID;
+                        updateApp.Body = lockapplication.Body;
+                        updateApp.Reason = lockapplication.Reason;
+                        updateApp.Remarks = lockapplication.Remarks;
+                        updateApp.ApplicationDate = DateTime.Now;
+                        updateApp.IsLocked = true;
+                        //updateApp.UserEntryID = lockapplication.ApplicantID;
+                        //updateApp.UserDateEntry = DateTime.Now;
+                        updateApp.UpdatedUserID = lockapplication.ApplicantID;
+                        updateApp.UpdatedDateEntry = DateTime.Now;
 
-                    updateApp.ApplicantID = lockapplication.ApplicantID;
-                    updateApp.ApplicationTypeId = lockapplication.ApplicationTypeID;
-                    updateApp.Body = lockapplication.Body;
-                    updateApp.Reason = lockapplication.Reason;
-                    updateApp.Remarks = lockapplication.Remarks;
-                    updateApp.ApplicationDate = Convert.ToDateTime(lockapplication.ApplicationDate);
-                    updateApp.IsLocked = true;
-                    updateApp.UserEntryID = lockapplication.UserEntryID;
-                    updateApp.UserDateEntry = Convert.ToDateTime(lockapplication.UserDateEntry);
-                    updateApp.UpdatedUserID = employee;
-                    updateApp.UpdatedDateEntry = Convert.ToDateTime(lockapplication.UpdatedDateEntry);
+                        db.SubmitChanges();
 
-                    db.SubmitChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    }
 
-                    return Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
                 {
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -169,25 +182,31 @@ namespace HRIS_sample.API_controller
                 var appID = from d in db.TrnApplications where d.ID == Convert.ToInt32(id) select d;
                 if (appID.Any())
                 {
-                    var updateApp = appID.FirstOrDefault();
-                    var employee = (from d in db.MstEmployees where d.UserID == User.Identity.GetUserId() select d.ID).SingleOrDefault();
+                    if (appID.FirstOrDefault().IsLocked)
+                    {
+                        var updateApp = appID.FirstOrDefault();
 
+                        //updateApp.ApplicantID = item.ApplicantID;
+                        //updateApp.ApplicationTypeId = item.ApplicationTypeID;
+                        //updateApp.Body = item.Body;
+                        //updateApp.Reason = item.Reason;
+                        //updateApp.Remarks = item.Remarks;
+                        //updateApp.ApplicationDate = DateTime.Now;
+                        updateApp.IsLocked = false;
+                        //updateApp.UserEntryID = item.ApplicantID;
+                        //updateApp.UserDateEntry = DateTime.Now;
+                        updateApp.UpdatedUserID = item.ApplicantID;
+                        updateApp.UpdatedDateEntry = DateTime.Now;
 
-                    updateApp.ApplicantID = item.ApplicantID;
-                    updateApp.ApplicationTypeId = item.ApplicationTypeID;
-                    updateApp.Body = item.Body;
-                    updateApp.Reason = item.Reason;
-                    updateApp.Remarks = item.Remarks;
-                    updateApp.ApplicationDate = Convert.ToDateTime(item.ApplicationDate);
-                    updateApp.IsLocked = false;
-                    updateApp.UserEntryID = item.UserEntryID;
-                    updateApp.UserDateEntry = Convert.ToDateTime(item.UserDateEntry);
-                    updateApp.UpdatedUserID = employee;
-                    updateApp.UpdatedDateEntry = Convert.ToDateTime(item.UpdatedDateEntry);
+                        db.SubmitChanges();
 
-                    db.SubmitChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    }
 
-                    return Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
                 {

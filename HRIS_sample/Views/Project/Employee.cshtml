@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+}
+
+<h2>Employee</h2>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>Dashboard Menu</h1>
+            <a class="btn btn-default" href="../project/Dashboard">&times; Close</a>
+        </div>
+        <div class="panel-body">
+            <div id="Employees" class="border wijmo"></div>
+        </div>
+        <div class="panel-footer">
+            Footer
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/software-js")
+<script type="text/javascript">
+    var ListEmployee;
+    var EmployeeGrid;
+
+    function getEmployeeList() {
+        var EmployeeList = new wijmo.collections.ObservableArray();
+        $.ajax({
+            url: '/api/employee/list',
+            cache: false,
+            type: 'GET',
+            contentType: 'application/json:charset=utf-8',
+            data: {},
+            success: function (result) {
+                if (result.lenght > 0) {
+                    for (var i = 0; i < result.lenght; i++) {
+                        EmployeeList.push({
+                            EditId: "<button class='btn btn-primary btn-xs btn-block' id='AppEditButton' onClick='cmdEditButton_OnClick()'><i class='glyphicon glyphicon-pencil'></i> Edit</button>",
+                            DeleteID: "<button class='btn btn-danger btn-xs btn-block' id='AppDeleteButton' onClick='cmddeleteButton_Onclick()'><i class='glyphicon glyphicon-trash'></i> Delete</button>",
+                            Id: result[i]["Id"],
+                            Name: result[i]["Name"]
+                        });
+                    }
+                }
+            }
+        });
+        return EmployeeList;
+    }
+
+    function Employee() {
+        ListEmployee = new wijmo.collections.CollectionView(getEmployeeList());
+        ListEmployee.pageSize = 15;
+
+        EmployeeGrid = new wijmo.grid.FlexGrid('#Employees');
+        EmployeeGrid.initialize({
+            columns: [{
+                "header": "Edit",
+                "binding": "EditId",
+                "align": "left",
+                "width": "1*",
+                "isContentHtml": true
+            },
+            {
+                "header": "Delete",
+                "binding": "DeleteId",
+                "align": "left",
+                "width": "1*",
+                "isContentHtml": true
+            },
+            {
+                "header": "Name",
+                "binding": "Name",
+                "align": "left",
+                "width": "2*",
+            }],
+            autoGenerateColumns: false,
+            itemsSource: ListEmployee,
+            isReadOnly: true,
+            autoSizeMode: wijmo.grid.AutoSizeMode.Both,
+            allowDragging: wijmo.grid.AllowDragging.None,
+            selectionMode: wijmo.grid.SelectionMode.Row
+        });
+        EmployeeGrid.trackChanges = true;
+    };
+    window.onload = function () {
+        Employee();
+    }
+</script>

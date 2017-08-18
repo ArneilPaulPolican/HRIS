@@ -26,7 +26,7 @@
         <elementListCompartment Id="dd39fbb3-5903-437d-8e99-72537074545a" absoluteBounds="8.89, 1.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.125 : 1.09699625651042); (8.575 : 1.09699625651042); (8.575 : 2.09699625651042); (8.875 : 2.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.125 : 1.09699625651042); (8.575 : 1.09699625651042); (8.575 : 2.09699625651042); (8.875 : 2.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HRISDataContext/AspNetRole/AspNetRole_AspNetUserRole" />
       <nodes>
         <classShapeMoniker Id="756c21af-7453-4859-a936-8d65b5421ca3" />
@@ -45,21 +45,21 @@
         <elementListCompartment Id="6071c8e5-a2af-4dd5-9383-dca45d6c827b" absoluteBounds="6.265, 2.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.46875 : 5.3670068359375); (7.46875 : 6.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.46875 : 5.3670068359375); (7.46875 : 6.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserClaim" />
       <nodes>
         <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
         <classShapeMoniker Id="577443f8-d760-4359-a07f-9f76e264e8b3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 3.87824575651042); (8.5312505 : 3.87824575651042); (8.5312505 : 5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 3.87824575651042); (8.5312505 : 3.87824575651042); (8.5312505 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserLogin" />
       <nodes>
         <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
         <classShapeMoniker Id="5096cbe4-9341-4a34-bff2-8ce116e6dbb2" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 2.47199625651042); (8.875 : 2.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 2.47199625651042); (8.875 : 2.47199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_AspNetUserRole" />
       <nodes>
         <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
@@ -72,41 +72,41 @@
         <elementListCompartment Id="a123f3ca-5a28-47bf-bec5-10d93f080a70" absoluteBounds="3.0149999999999997, 5.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.59375 : 5.3670068359375); (6.59375 : 6.50564697265625); (5 : 6.50564697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.59375 : 5.3670068359375); (6.59375 : 6.50564697265625); (5 : 6.50564697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HRISDataContext/AspNetUser/AspNetUser_MstEmployee" />
       <nodes>
         <classShapeMoniker Id="8e021daa-9a69-442c-b859-d42c33b60437" />
         <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
       </nodes>
     </associationConnector>
-    <classShape Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" absoluteBounds="3.25, 1.125, 2, 3.1170068359375">
+    <classShape Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" absoluteBounds="3.5, 1.5, 1.875, 3.1170068359375">
       <DataClassMoniker Name="/HRISDataContext/TrnApplication" />
       <nestedChildShapes>
-        <elementListCompartment Id="4f79c0d4-98d4-45df-8d9f-8ea549b9d249" absoluteBounds="3.265, 1.585, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4f79c0d4-98d4-45df-8d9f-8ea549b9d249" absoluteBounds="3.515, 1.96, 1.8450000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.125 : 5.25); (4.125 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.2666028125 : 5.25); (4.2666028125 : 4.6170068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication" />
       <nodes>
         <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
         <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.625 : 5.25); (4.625 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.69580140625 : 5.25); (4.69580140625 : 4.6170068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication1" />
       <nodes>
         <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
         <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.625 : 5.25); (3.625 : 4.2420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.82080140625 : 5.25); (3.82080140625 : 4.6170068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HRISDataContext/MstEmployee/MstEmployee_TrnApplication2" />
       <nodes>
         <classShapeMoniker Id="8a131c4a-2789-4921-b3d6-d85d752b1581" />
         <classShapeMoniker Id="cfd2648a-9ec1-42ca-9c19-bf17600405d7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.5 : 1.53449625651042); (3.25 : 1.53449625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 1.72199625651042); (3.5 : 1.72199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HRISDataContext/TrnApplicationType/TrnApplicationType_TrnApplication" />
       <nodes>
         <classShapeMoniker Id="9b46d2a9-0d53-483c-a9c9-a7075c0ca320" />

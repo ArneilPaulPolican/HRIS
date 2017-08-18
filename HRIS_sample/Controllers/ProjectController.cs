@@ -24,6 +24,10 @@ namespace HRIS_sample.Controllers
 
             return View();
         }
+        public ActionResult Employee()
+        {
+            return View();
+        }
 
     }
 }

@@ -10,7 +10,7 @@
         <div class="panel-heading">
             <a class="btn btn-default btn-sm" href="../project/dashboard">Back</a>
             <!-- Trigger the modal with a button -->
-            <a class="btn btn-primary btn-sm" id="AddIditForm" href="../project/applicationdetail">Add</a>
+            <a class="btn btn-primary btn-sm" id="AddIditForm" onclick="cmdAddButton_OnClick()">Add</a>
         </div>
         <div class="panel-body">
             <div id="applicationCollectionGrid" class="border-wijmo"></div>
@@ -23,7 +23,7 @@
 <div class="modal fade" id="DeleteConfirmModal" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">2
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
@@ -46,17 +46,21 @@
     var applicationCollectionView;
     //=================ADD Onclikc ==========================
     function cmdAddButton_OnClick() {
-        document.getElementById("AddIditForm").innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> Adding";
-
         $.ajax({
             type: 'POST',
             url: '/api/application/add',
-            contentType: 'application/json:charset=utf-8',
-            success: function (id) {
-                if (id > 0) {
-                    window.location = '/Project/ApplicationDetail?id=' + ID;
-                } else {
-                    toastr.error("Internal Server Error");
+            contentType: "application/json:charset=utf-8",
+            statusCode: {
+                200: function () {
+                    //if (id > 0) {
+                    document.getElementById("AddIditForm").innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> Adding";
+                    window.location = '/project/applicationdetail?id' + getUrlParameter("id");
+                    //} else {
+                    //    toastr.error("Internal Server Error");
+                    //}
+                }, 400: function () {
+                    document.getElementById("AddIditForm").innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> Add";
+                    toastr.error("Bad Request")
                 }
             }
         });
@@ -66,14 +70,13 @@
     function cmddeleteButton_Onclick() {
         $('#DeleteConfirmModal').modal({
             "show": true,
-            "backdrop":"static"
+            "backdrop": "static"
         });
     }
     //Confirm
     function btnApplicationDeleteConfirmed() {
         applicationList.editItem(applicationList.currentItem);
         var id = applicationList.currentEditItem.ID;
-
         $.ajax({
             url: '/api/application/delete/' + id,
             type: 'DELETE',
@@ -88,7 +91,7 @@
                 404: function () {
                     toastr.error("Delete Not Found")
                 }, 400: function () {
-                    toastr.error("Bad Request")
+                    toastr.error("Unable to Delete Request")
                 }
             }
         });
@@ -119,6 +122,7 @@
                             DeleteId: "<button class='btn btn-danger btn-xs btn-block' id='AppDeleteButton' onClick='cmddeleteButton_Onclick()'><i class='glyphicon glyphicon-trash'></i> Delete</button>",
                             ID: result[i]["ID"],
                             ApplicantID: result[i]["ApplicantID"],
+                            Name: result[i]["Name"],
                             ApplicationTypeID: result[i]["ApplicationTypeID"],
                             TypeApplication: result[i]["TypeApplication"],
                             Reason: result[i]["Reason"],
@@ -146,43 +150,49 @@
         applicationGrid = new wijmo.grid.FlexGrid('#applicationCollectionGrid');
         applicationGrid.initialize({
             columns: [{
-                    "header": "Edit",
-                    "binding": "EditId",
-                    "align": "left",
-                    "width": "1*",
-                    "isContentHtml": true
-                },
-                {
-                    "header": "Delete",
-                    "binding": "DeleteId",
-                    "align": "left",
-                    "width": "1*",
-                    "isContentHtml": true
-                },
-                {
-                    "header": "Application Type",
-                    "binding": "TypeApplication",
-                    "align": "left",
-                    "width": "3*",
-                },
-                {
-                    "header": "Reason",
-                    "binding": "Reason",
-                    "align": "left",
-                    "width": "5*",
-                },
-                {
-                    "header": "Remarks",
-                    "binding": "Remarks",
-                    "align": "left",
-                    "width": "4*",
-                },
-                {
-                    "header": "Is Locked",
-                    "binding": "IsLocked",
-                    "align": "left",
-                    "width": "2*",
-                }],
+                "header": "Edit",
+                "binding": "EditId",
+                "align": "left",
+                "width": "1*",
+                "isContentHtml": true
+            },
+            {
+                "header": "Delete",
+                "binding": "DeleteId",
+                "align": "left",
+                "width": "1*",
+                "isContentHtml": true
+            },
+            {
+                "header": "Employee Name",
+                "binding": "Name",
+                "align": "left",
+                "width": "2*",
+            },
+            {
+                "header": "Application Type",
+                "binding": "TypeApplication",
+                "align": "left",
+                "width": "2*",
+            },
+            {
+                "header": "Reason",
+                "binding": "Reason",
+                "align": "left",
+                "width": "4*",
+            },
+            {
+                "header": "Remarks",
+                "binding": "Remarks",
+                "align": "left",
+                "width": "3*",
+            },
+            {
+                "header": "Is Locked",
+                "binding": "IsLocked",
+                "align": "center",
+                "width": "1*",
+            }],
             autoGenerateColumns: false,
             itemsSource: applicationList,
             isReadOnly: true,
